@@ -23,6 +23,9 @@ public class fib{
 	return acc;
     }
     public static void main(String[] args){
+	long start = System.currentTimeMillis();
 	System.out.printf("%d\n", doWork(Integer.parseInt(args[0])));
+	long duration = System.currentTimeMillis() - start;
+	System.out.println("LANGUAGE  Java  "+ duration);
     }
 }

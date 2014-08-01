@@ -4,6 +4,7 @@ import(
 	"fmt"
 	"strconv"
 	"os"
+	"time"
 )
 
 func fib(x int) int{
@@ -31,6 +32,9 @@ func doWork(rem int) int{
 }
 
 func main(){
+	start := time.Now()
 	n, _ := strconv.Atoi(os.Args[1])
 	fmt.Printf("%d\n", doWork(n));
+	duration := time.Now().Sub(start).Nanoseconds() / 1000000
+	fmt.Printf("LANGUAGE  Go  %v\n", duration)
 }

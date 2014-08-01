@@ -24,6 +24,9 @@ public class fib{
 	return acc;
     }
     public static void Main(string[] args){
+    	long start= DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 	System.Console.WriteLine(doWork(Convert.ToInt32(args[0])));
+	long duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start;
+	System.Console.WriteLine("LANGUAGE  C#  "+ duration);
     }
 }
