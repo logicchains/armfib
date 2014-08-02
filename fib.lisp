@@ -21,8 +21,13 @@
                      (+ acc (do-fib (mod (+ 1 acc) 50))) 
                      (- rem 1))))
 
-(defun run () (format t "~d ~%"
-		(do-work 0 
-			 (parse-integer (nth 1 sb-ext:*posix-argv*)))))
+(defun run ()
+  (defvar start (get-internal-real-time))
+  (format t "~d ~%"		     
+	  (do-work 0 
+		   (parse-integer (nth 1 sb-ext:*posix-argv*))))
+  (defvar duration (- (get-internal-real-time) start))
+  (format t "LANGUAGE  Lisp  ~d ~%" duration))
+
 
 (sb-ext:save-lisp-and-die "lsfib" :toplevel #'run :executable t)

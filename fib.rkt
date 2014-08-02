@@ -20,4 +20,7 @@
 (define arg (string->number (vector-ref (current-command-line-arguments) 0)))
 (define n (if arg arg 0))
 
+(define start (current-inexact-milliseconds))
 (doWork 0 (if n (numerator (inexact->exact (real-part n))) 0))
+(define duration (- (current-inexact-milliseconds) start))
+(printf "LANGUAGE  Racket  ~a\n" (inexact->exact (floor duration)))

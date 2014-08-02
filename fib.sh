@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 builders=("clang fib.c -O3 -o cfib"\
-           "ocamlopt fib.ml -o mlfib"\
+           "ocamlopt -o mlfib unix.cmxa fib.ml"\
            "go build -o gofib fib.go"\
            "javac fib.java"\
            "mcs fib.cs"\
