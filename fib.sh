@@ -7,14 +7,13 @@ builders=("clang fib.c -O3 -o cfib"\
            "mcs fib.cs"\
            "raco exe -o rktfib fib.rkt"\
            "ghc hsfib.hs -O3 -fllvm -o hsfib"\
-           "sbcl --load fib.lisp --non-interactive")
+           "sbcl --load fib.lisp --non-interactive"\
+           "rustc fib.rs --opt-level=3 -o rsfib")
 
-numFibs=${#builders[@]}
-
-for((i=0; i < ${numFibs}; i++));
+for((i=0; i < ${#builders[@]}; i++));
 do
-   ${builders[i]}
-#  echo Shirking
+#   ${builders[i]}
+  echo Shirking
 done
 
 runners=(  "./cfib"\
@@ -24,12 +23,14 @@ runners=(  "./cfib"\
            "mono fib.exe"\
            "./rktfib"\
            "./hsfib"\
-           "./lsfib")
+           "./lsfib"\
+           "luajit ./fib.lua"\
+           "./rsfib")
 
 start=""
 ${start} > rawRes
 
-for((i=0; i < ${numFibs}; i++));
+for((i=0; i < ${#runners[@]}; i++));
 do
    ${runners[i]} $1 >> rawRes
 done
@@ -40,7 +41,9 @@ echo \{ print \$1 \"  \" \$2 \"  \" ${ctime}/\$2 \* 100\} > ./tmp.awk
 awk -E tmp.awk ./tmpRes > ./finRes
 sort -k 3 -n -r ./finRes > ./sortedRes
 
-echo \<html\>\<head\>\</head\>\<body\>\<table\>
+echo '<html><head></head><body><table style="width: 100%" border="1" cellspacing="1" cellpadding="1">'
+echo '<th style="width: 40%">Language</th><th style="width: 20%">Runtime (ms)</th>'
+echo '<th style="width: 20%"> % C speed </th>'
 echo '{print "<tr><td>"$1"</td><td>"$2"</td><td>"$3"</td></tr>"}' > ./tmp.awk
 awk -E tmp.awk ./sortedRes
-echo \</table\>\</body\>\</html\>
+echo '</table></body></html>'
