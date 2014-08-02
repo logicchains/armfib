@@ -29,5 +29,4 @@
   (defvar duration (- (get-internal-real-time) start))
   (format t "LANGUAGE  Lisp  ~d ~%" duration))
 
-
 (sb-ext:save-lisp-and-die "lsfib" :toplevel #'run :executable t)

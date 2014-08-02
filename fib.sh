@@ -13,8 +13,8 @@ numFibs=${#builders[@]}
 
 for((i=0; i < ${numFibs}; i++));
 do
-#   ${builders[i]}
-    echo "poo"
+   ${builders[i]}
+#  echo Shirking
 done
 
 runners=(  "./cfib"\
@@ -33,3 +33,14 @@ for((i=0; i < ${numFibs}; i++));
 do
    ${runners[i]} $1 >> rawRes
 done
+
+awk '$1 == "LANGUAGE" { print $2 "  " $3 }' ./rawRes > ./tmpRes
+ctime=$(awk '$1 == "C" { print $2}' ./tmpRes)
+echo \{ print \$1 \"  \" \$2 \"  \" ${ctime}/\$2 \* 100\} > ./tmp.awk
+awk -E tmp.awk ./tmpRes > ./finRes
+sort -k 3 -n -r ./finRes > ./sortedRes
+
+echo \<html\>\<head\>\</head\>\<body\>\<table\>
+echo '{print "<tr><td>"$1"</td><td>"$2"</td><td>"$3"</td></tr>"}' > ./tmp.awk
+awk -E tmp.awk ./sortedRes
+echo \</table\>\</body\>\</html\>
