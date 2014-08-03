@@ -9,6 +9,6 @@ echo '<html><head></head><body><table style="width: 100%" border="1" cellspacing
 echo '<th style="width: 50%">Language</th><th style="width: 50%"> % x86 speed</th>'
 echo '{print "<tr><td>"$1"</td><td>"$2"</td></tr>"}' > ./tmp.awk
 
-join armSrtd x86Srtd | awk '{print $1" "$3/$5*100}' | awk -E tmp.awk
+join armSrtd x86Srtd | awk '{print $1" "$3/$5*100}' |  sort -k 2 -n -r | awk -E tmp.awk 
 
 echo '</table></body></html>'
