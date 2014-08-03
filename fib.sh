@@ -1,7 +1,9 @@
 #!/usr/bin/bash -u
 
-if [ $# -ne 1 ]; then echo -e "Usage is sh $0 <NumIterations>"; exit 1; fi
+if [ $# -ne 2 ]; then echo -e "Usage is sh $0 <NumIterations> <Compile?>"; exit 1; fi
 
+if [ "$2" = true ]; then
+echo "Compiling..."
 builders=("clang fib.c -O3 -o cfib"\
            "ocamlopt -o mlfib unix.cmxa fib.ml"\
            "go build -o gofib fib.go"\
@@ -17,6 +19,10 @@ do
    ${builders[i]}
 #  echo Shirking
 done
+
+fi
+
+echo "Running..."
 
 runners=(  "./cfib"\
            "./mlfib"\
@@ -37,6 +43,8 @@ do
    ${runners[i]} $1 >> rawRes
 done
 
+echo "Organising results..."
+
 awk '$1 == "LANGUAGE" { print $2 "  " $3 }' ./rawRes > ./tmpRes
 ctime=$(awk '$1 == "C" { print $2}' ./tmpRes)
 echo \{ print \$1 \"  \" \$2 \"  \" ${ctime}/\$2 \* 100\} > ./tmp.awk
@@ -49,3 +57,5 @@ echo '<th style="width: 20%"> % C speed </th>'
 echo '{print "<tr><td>"$1"</td><td>"$2"</td><td>"$3"</td></tr>"}' > ./tmp.awk
 awk -E tmp.awk ./sortedRes
 echo '</table></body></html>'
+
+echo "Results are in ./sortedRes"
