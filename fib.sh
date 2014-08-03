@@ -1,4 +1,6 @@
-#!/usr/bin/bash
+#!/usr/bin/bash -u
+
+if [ $# -ne 1 ]; then echo -e "Usage is sh $0 <NumIterations>"; exit 1; fi
 
 builders=("clang fib.c -O3 -o cfib"\
            "ocamlopt -o mlfib unix.cmxa fib.ml"\
@@ -12,8 +14,8 @@ builders=("clang fib.c -O3 -o cfib"\
 
 for((i=0; i < ${#builders[@]}; i++));
 do
-#   ${builders[i]}
-  echo Shirking
+   ${builders[i]}
+#  echo Shirking
 done
 
 runners=(  "./cfib"\
