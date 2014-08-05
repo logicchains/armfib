@@ -3,7 +3,7 @@ extern crate time;
 use std::os; 
 use time::precise_time_ns;
 
-fn fib_rec(qianVal:int,zuoVal:int,rem:int)->int{
+fn fib_rec(qianVal:i32,zuoVal:i32,rem:i32)->i32{
   if rem == 0{
     zuoVal 
   }else{
@@ -11,7 +11,7 @@ fn fib_rec(qianVal:int,zuoVal:int,rem:int)->int{
   }  
 }
 
-fn fib(x:int)->int{
+fn fib(x:i32)->i32{
   if x < 2{
     x
   }else{
@@ -19,7 +19,7 @@ fn fib(x:int)->int{
   } 
 }
 
-fn do_work(acc:int,rem:int)->int{
+fn do_work(acc:i32,rem:i32)->i32{
   if rem == 0 {
     acc
   }else{
@@ -28,7 +28,7 @@ fn do_work(acc:int,rem:int)->int{
 }
 
 fn main() {
-  let n : int = from_str(os::args().get(1).as_slice()).expect("First argument must be an int");
+  let n : i32 = from_str(os::args().get(1).as_slice()).expect("First argument must be an i32");
   let startTime = precise_time_ns();
   println!("{}",do_work(0,n));
   let duration = (precise_time_ns() - startTime) / 1000000;
