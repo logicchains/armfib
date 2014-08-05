@@ -1,14 +1,14 @@
 extern crate time;
 
-use std::os; 
+use std::os;
 use time::precise_time_ns;
 
 fn fib_rec(qianVal:i32,zuoVal:i32,rem:i32)->i32{
   if rem == 0{
-    zuoVal 
+    zuoVal
   }else{
     fib_rec(zuoVal,qianVal+zuoVal,rem-1)
-  }  
+  }
 }
 
 fn fib(x:i32)->i32{
@@ -16,7 +16,7 @@ fn fib(x:i32)->i32{
     x
   }else{
     fib_rec(0,1,x-1)
-  } 
+  }
 }
 
 fn do_work(acc:i32,rem:i32)->i32{
@@ -32,5 +32,5 @@ fn main() {
   let startTime = precise_time_ns();
   println!("{}",do_work(0,n));
   let duration = (precise_time_ns() - startTime) / 1000000;
-  println!("LANGUAGE  Rust  {}", duration);
+  println!("LANGUAGE Rust {}", duration);
 }
